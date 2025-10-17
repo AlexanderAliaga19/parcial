@@ -1,0 +1,148 @@
+{
+  "DataRecordType": [
+    {
+      "id": 1,
+      "name": "Temperature",
+      "description": "Ambient temperature of the refrigerated display case",
+      "unit": "Celsius",
+      "createdAt": "2024-01-15T09:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Humidity",
+      "description": "Relative humidity inside the refrigerated display",
+      "unit": "%",
+      "createdAt": "2024-01-15T09:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "DoorState",
+      "description": "Door state of the unit (0 = closed, 1 = open)",
+      "unit": "state",
+      "createdAt": "2024-01-15T09:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "EnergyConsumption",
+      "description": "Instantaneous energy consumption of the equipment",
+      "unit": "kWh",
+      "createdAt": "2024-01-15T09:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "DefrostCycle",
+      "description": "Defrost cycle status (0 = off, 1 = on)",
+      "unit": "state",
+      "createdAt": "2024-01-15T09:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    }
+  ],
+  "Thresholds": [
+    {
+      "id": 1,
+      "dataRecordTypeId": 1,
+      "equipmentTypeId": 10,
+      "minValue": 0,
+      "maxValue": 4,
+      "alertLevel": "CRITICAL",
+      "description": "Temperature must stay between 0°C and 4°C for refrigerated displays",
+      "createdAt": "2024-02-01T08:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "dataRecordTypeId": 2,
+      "equipmentTypeId": 10,
+      "minValue": 30,
+      "maxValue": 70,
+      "alertLevel": "WARNING",
+      "description": "Recommended humidity range to avoid condensation or drying",
+      "createdAt": "2024-02-01T08:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 3,
+      "dataRecordTypeId": 3,
+      "equipmentTypeId": 10,
+      "minValue": 1,
+      "maxValue": 1,
+      "alertLevel": "WARNING",
+      "description": "Door open detected (value = 1) — check for prolonged openings",
+      "createdAt": "2024-02-01T08:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 4,
+      "dataRecordTypeId": 4,
+      "equipmentTypeId": 10,
+      "minValue": 0,
+      "maxValue": 8,
+      "alertLevel": "INFO",
+      "description": "Typical instantaneous energy consumption upper bound (kWh)",
+      "createdAt": "2024-02-01T08:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    },
+    {
+      "id": 5,
+      "dataRecordTypeId": 4,
+      "equipmentTypeId": 20,
+      "minValue": 0,
+      "maxValue": 15,
+      "alertLevel": "INFO",
+      "description": "Typical instantaneous energy consumption upper bound for larger units (kWh)",
+      "createdAt": "2024-02-01T08:00:00Z",
+      "updatedAt": "2024-06-10T12:00:00Z"
+    }
+  ],
+  "DataRecords": [
+    {
+      "id": 1,
+      "equipmentAssetId": 1001,
+      "dataRecordTypeId": 1,
+      "value": 3.2,
+      "recordedAt": "2025-10-15T08:30:00Z",
+      "createdAt": "2025-10-15T08:30:05Z",
+      "updatedAt": "2025-10-15T08:30:05Z"
+    },
+    {
+      "id": 2,
+      "equipmentAssetId": 1001,
+      "dataRecordTypeId": 2,
+      "value": 45.0,
+      "recordedAt": "2025-10-15T08:30:00Z",
+      "createdAt": "2025-10-15T08:30:05Z",
+      "updatedAt": "2025-10-15T08:30:05Z"
+    },
+    {
+      "id": 3,
+      "equipmentAssetId": 1001,
+      "dataRecordTypeId": 3,
+      "value": 0,
+      "recordedAt": "2025-10-15T09:00:00Z",
+      "createdAt": "2025-10-15T09:00:02Z",
+      "updatedAt": "2025-10-15T09:00:02Z"
+    },
+    {
+      "id": 4,
+      "equipmentAssetId": 1001,
+      "dataRecordTypeId": 3,
+      "value": 1,
+      "recordedAt": "2025-10-15T09:05:30Z",
+      "createdAt": "2025-10-15T09:05:35Z",
+      "updatedAt": "2025-10-15T09:05:35Z"
+    },
+    {
+      "id": 5,
+      "equipmentAssetId": 1002,
+      "dataRecordTypeId": 4,
+      "value": 4.75,
+      "recordedAt": "2025-10-15T10:15:00Z",
+      "createdAt": "2025-10-15T10:15:05Z",
+      "updatedAt": "2025-10-15T10:15:05Z"
+    }
+  ]
+}
