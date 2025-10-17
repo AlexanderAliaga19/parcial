@@ -23,7 +23,7 @@ const items = [
     <pv-toolbar class="bg-primary">
       <template #start>
         <pv-button  class="p-button-text" icon="pi pi-bars" @click="toggleDrawer"/>
-        <img src="https://logo.clearbit.com/BBVA.com" alt="ACME Logo" height="40" class="mr-2"/>
+        <img src="/hussmann.png" alt="ACME Logo" height="40" class="mr-2"/>
         <h3>{{ t('home.title-header') }}</h3>
       </template>
       <template #end>
