@@ -1,60 +1,71 @@
+
+<style scoped>
+
+</style>
+
 <script setup>
 import {useI18n} from "vue-i18n";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
+import {useConfirm} from "primevue";
 import usePublishingStore from "../../application/publishing.store.js";
-import {computed, onMounted, ref} from "vue";
-import {Category, DataRecord} from "../../domain/model/data-Record.entity.js";
+import {onMounted} from "vue";
 
 const {t} = useI18n();
-const route = useRoute();
 const router = useRouter();
+const confirm = useConfirm();
 const store = usePublishingStore();
-const {errors, addDatarecord, updateDatarecord} = store;
-
-const form = ref({name: ''});
-const isEdit = computed(() => !!route.params.id);
+const {datarecord, datarecordLoaded, errors, fetchdatarecord, deletedatarecord} = store;
 
 onMounted(() => {
-  console.log(route.params.id);
-  if (isEdit.value) {
-    const datarecord = getDatarecordById(route.params.id);
-    console.log(datarecord);
-    if (datarecord) form.value.name = datarecord.name; else router.push({name: 'publishing-datarecord'});
-  }
+  if (!datarecordLoaded) fetchdatarecord();
+  console.log(datarecord);
 });
 
-function getCategoryById(id) {
-  return store.getDatarecordById(id);
-}
-
-const saveCategory = () => {
-  const dataRecord = new DataRecord({
-    id: isEdit.value ? route.params.id : null,
-    name: form.value.name,
-  });
-  if (isEdit.value) updateDatarecord(category); else addDatarecord(dataRecord);
-  navigateBack();
+const navigateToNew = () => {
+  router.push({name: 'publishing-datarecord-new'});
 };
 
-const navigateBack = () => {
-  router.push({name: 'publishing-datarecord'});
+const navigateToEdit = (id) => {
+  router.push({name: 'publishing-datarecord-edit', params: {id}});
+};
+
+const confirmDelete = (category) => {
+  confirm.require({
+    message: t('datarecord.confirm-delete', {name: datarecord.name}),
+    header: t('datarecord.delete-header'),
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+      deletedatarecord(datarecord);
+    },
+  });
 };
 </script>
 
 <template>
   <div class="p-4">
-    <h1>{{ isEdit ? t('datarecord.edit-title') : t('datarecord.new-title') }}</h1>
-    <form @submit.prevent="saveCategory">
-      <div class="field mb-3">
-        <label for="name">{{ t('datarecord.name') }}</label>
-        <pv-input-text id="name" v-model="form.name" class="w-full" required/>
-      </div>
-      <pv-button :label="t('datarecord.save')" icon="pi pi-save" type="submit"/>
-      <pv-button :label="t('datarecord.cancel')" class="ml-2" severity="secondary" @click="navigateBack"/>
-    </form>
+    <h1>{{ t('datarecord.title') }}</h1>
+    <pv-button :label="t('datarecord.new')" class="mb-3" icon="pi pi-plus" @click="navigateToNew"/>
+    <pv-data-table
+        :loading="!datarecordLoaded"
+        :rows="5"
+        :rows-per-page-options="[5, 10, 20]"
+        :value="datarecord"
+        paginator
+        striped-rows
+        table-style="min-width: 50rem">
+      <pv-column :header="t('datarecord.id')" field="id" sortable/>
+      <pv-column :header="t('datarecord.name')" field="name" sortable/>
+      <pv-column :header="t('datarecord.actions')">
+        <template #body="slotProps">
+          <pv-button icon="pi pi-pencil" rounded text @click="navigateToEdit(slotProps.data.id)"/>
+          <pv-button icon="pi pi-trash" rounded severity="danger" text @click="confirmDelete(slotProps.data)"/>
+        </template>
+      </pv-column>
+    </pv-data-table>
     <div v-if="errors.length" class="text-red-500 mt-3">
       {{ t('errors.occurred') }}: {{ errors.map(e => e.message).join(', ') }}
     </div>
+    <pv-confirm-dialog/>
   </div>
 </template>
 
